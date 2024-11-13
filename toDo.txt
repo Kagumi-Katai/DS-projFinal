@@ -1,0 +1,8 @@
+[]redirecionar das paginas de create e atualizar para index.html
+[]criar a base de dados automaticamente
+
+
+[x]criar página de detalhes para mostrar mais informações sobre o objeto
+[x]criar alerta de confirmação antes de fazer atualizações
+[x]colocar para na atualização puxar os valores atuais como placeholder
+[x] criar alerta de confirmação antes de deletar
