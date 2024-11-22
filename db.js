@@ -20,7 +20,7 @@ const Filme = conn.define("filmes", {
     }
 });
 
-Filme.sync({force: true}); 
+Filme.sync({force: false}); 
 
 Filme.create({
     nome_filme: "Filme placeholder",

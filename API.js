@@ -28,9 +28,6 @@ const Filme = conn_BD.define("filme", {
 });
 
 //ROTAS
-app.get("/", function (req, res){
-    res.send("Página padrão")
-});
 
 //index
 app.get("/index", function (req, res) {

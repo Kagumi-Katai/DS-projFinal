@@ -33,12 +33,15 @@ async function readAllFunc() {
     container.innerHTML = "";
 
     filmes.forEach((filme) => {
+        const [ano, mes, dia] = filme.data_lancamento.split('T')[0].split('-');
+
+
         const filmeRow = document.createElement('tr');
         filmeRow.innerHTML = `
         <td>${filme.nome_filme}</td> 
         <td>${filme.sinopse}</td> 
         <td>${filme.estudio}</td> 
-        <td>${filme.data_lancamento}</td>
+        <td>${dia}/${mes}/${ano}</td>
         <td>
             <a onclick="redirectDetails(${filme.id})" class='btn btn-info btn-sm'>Detalhes</a>   
             <a onclick="redirectUpdate(${filme.id})" class='btn btn-warning btn-sm'>Atualizar</a>
