@@ -6,20 +6,22 @@ async function createFunc() {
     const estudio_filme = document.getElementById("estudio_filme").value;
     const data_lancamento = document.getElementById("data_filme").value;
 
-    const urlCreate = `http://localhost:3031/create/${nome_filme}/${sinopse_filme}/${estudio_filme}/${data_lancamento}`;
-
-
-    const response = await fetch(urlCreate, {
-        method: 'GET',
-    });
-
-    console.log("i guess we're debuggin now :/")
-
-    if (response.ok) {
-        alert("Cadastro concluido");
-        window.location.href = "index.html";
+    if (!nome_filme || !sinopse_filme || !estudio_filme || !data_lancamento) {
+        alert("Todos os campos são obrigatórios!");
     } else {
-        console.error('Erro ao criar filme');
+
+        const urlCreate = `http://localhost:3031/create/${nome_filme}/${sinopse_filme}/${estudio_filme}/${data_lancamento}`;
+
+        const response = await fetch(urlCreate, { method: 'GET' });
+
+        console.log("i guess we're debuggin now :/")
+
+        if (response.ok) {
+            alert("Cadastro concluido");
+            window.location.href = "index.html";
+        } else {
+            console.error('Erro ao criar filme');
+        }
     }
 }
 
@@ -83,22 +85,38 @@ async function updateFunc() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
-    const nome_filme = document.getElementById("nome_filme").value;
-    const sinopse_filme = document.getElementById("descricao_filme").value;
-    const estudio_filme = document.getElementById("estudio_filme").value;
-    const data_lancamento = document.getElementById("data_filme").value;
+    let nome_filme = document.getElementById("nome_filme").value;
+    let sinopse_filme = document.getElementById("descricao_filme").value;
+    let estudio_filme = document.getElementById("estudio_filme").value;
+    let data_lancamento = document.getElementById("data_filme").value;
 
-    const urlUpdate = `http://localhost:3031/update/${encodeURIComponent(id)}/${encodeURIComponent(nome_filme)}/${encodeURIComponent(sinopse_filme)}/${encodeURIComponent(estudio_filme)}/${encodeURIComponent(data_lancamento)}`;
+    if (!data_lancamento) {
 
-    const response = await fetch(urlUpdate, {
-        method: 'GET',
-    });
+        alert("Selecione a data de lançamento!");
 
-    if (response.ok) {
-        alert("Atualização realizada com sucesso!");
-        window.location.href = 'index.html';
     } else {
-        console.error('Erro ao atualizar filme');
+    
+        if (!nome_filme || !sinopse_filme || !estudio_filme || !data_lancamento) {
+
+            console.log("log")
+
+            nome_filme = document.getElementById("nome_filme").placeholder;
+            sinopse_filme = document.getElementById("descricao_filme").placeholder;
+            estudio_filme = document.getElementById("estudio_filme").placeholder;
+        } 
+
+        const urlUpdate = `http://localhost:3031/update/${id}/${nome_filme}/${sinopse_filme}/${estudio_filme}/${data_lancamento}`;
+
+        const response = await fetch(urlUpdate, {
+            method: 'GET',
+        });
+
+        if (response.ok) {
+            alert("Atualização realizada com sucesso!");
+            window.location.href = 'index.html';
+        } else {
+            console.error('Erro ao atualizar filme');
+        }
     }
 }
 
