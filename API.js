@@ -1,53 +1,51 @@
-//setup
-const Sequelize = require("sequelize");
+/* ==== SETUP ===== */
+
+const Sequelize = require("sequelize");    
+const Filme = require("./db.js");           //importa o modelo 'Filme'
 const express = require("express");
-const app = express();
 const cors = require('cors');
 
+const app = express();
 app.use(cors());
 
-const conn_BD = new Sequelize("locadora", "root", "", {
-    host: "localhost",
-    dialect: "mysql"
+
+/* ==== TELAS ==== */
+
+app.get("/catalogo", function (req, res) {
+    res.sendFile(__dirname + "/html/index.html");
 });
 
-//conexão com o banco
-const Filme = conn_BD.define("filme", {
-    nome_filme: {
-        type: Sequelize.STRING
-    },
-    sinopse: {
-        type: Sequelize.TEXT
-    },
-    estudio: {
-        type: Sequelize.STRING
-    },
-    data_lancamento: {
-        type: Sequelize.DATE
-    }
+app.get("/adicionar", function (req, res) {
+    res.sendFile(__dirname + "/html/create.html");
 });
 
-//ROTAS
-
-//index
-app.get("/index", function (req, res) {
-    res.sendFile(__dirname + "./html/index.html");
+app.get("/editar", function (req, res) {
+    res.sendFile(__dirname + "/html/update.html");
 });
+
+app.get("/detalhes", function (req, res) {
+    res.sendFile(__dirname + "/html/details.html");
+});
+
+
+/* ==== ROTAS ==== */
 
 //create
 app.get("/create/:nome_filme/:sinopse/:estudio/:data_lancamento", async function (req, res) {
+
     const { nome_filme, sinopse, estudio, data_lancamento } = req.params;
 
-    const novoFilme = await Filme.create({ nome_filme, sinopse, estudio, data_lancamento });
-  
-    res.json({
-      resposta: "Filme criado com sucesso",
-      filme: novoFilme,
-    });
+    try {
+        const novoFilme = await Filme.create({ nome_filme, sinopse, estudio, data_lancamento });
+        res.status(200).json({ message: "Dados recebidos com sucesso!" });
+    } catch (error){
+        res.status(500).json({ message: `Erro ao cadastrar filme: ${error}` });
+    }
 });
 
 //read all
 app.get("/readAll", async function (req, res) {
+
     try {
         const filmes = await Filme.findAll();
         res.json(filmes);
@@ -60,48 +58,47 @@ app.get("/readAll", async function (req, res) {
 app.get("/readOne/:id", async function (req, res) {
 
     const {id} = req.params;
-    const idNumber = parseInt(id, 10);
 
-    const filme = await Filme.findByPk(id);
-    if (filme === null) {
-      console.log('Not found!');
+    try {
+        const filme = await Filme.findByPk(id);
+        res.json(filme);
+    } catch (error) {
+        res.status(500).json({ message: `Filme não encontrado: ${error}` });
     } 
-    
-    res.json(filme);
-/*     res.status(500).json({ message: `Erro ao buscar filme de id${idNumber}: ${error}` }); */
-    
 });
 
 //update
 app.get("/update/:id/:nome_filme/:sinopse/:estudio/:data_lancamento", async function (req, res) {
+    
     const { id, nome_filme, sinopse, estudio, data_lancamento } = req.params;
-    const idNumber = parseInt(id, 10);
-  
-    const [updated] = await Filme.update(
-      { nome_filme, sinopse, estudio, data_lancamento },
-      {
-        where: { id: idNumber },
-      }
-    );
-  
-    res.json({
-      mensagem: "Filme atualizado com sucesso",
-    });
+
+    try {
+        const filme = await Filme.findByPk(id);
+        if (!filme) {
+            return res.status(404).json({ message: "Filme não encontrado para atualização." });
+        }
+        await Filme.update(
+            { nome_filme, sinopse, estudio, data_lancamento },
+            { where: { id } }
+        );
+        res.status(200).json({ message: "Filme atualizado com sucesso!" });
+    } catch (error) {
+        res.status(500).json({ message: `Ocorreu um erro ao atualizar o filme: ${error.message}` });
+    }
 });
 
 //delete
 app.get("/delete/:id", async function (req, res) {
     const { id } = req.params;
-    const idNumber = parseInt(id, 10); // Converte o ID para número
-
-    const deleted = await Filme.destroy({
-        where: { id: idNumber },
-    });
-
-    if (deleted) {
-        res.json({ mensagem: "Filme deletado com sucesso" });
-    } else {
-        res.status(404).json({ mensagem: "Filme não encontrado" });
+    try {
+        const filme = await Filme.findByPk(id);
+        if (!filme) {
+            return res.status(404).json({ message: "Filme não encontrado para remoção." });
+        }
+        await Filme.destroy({ where: { id } });
+        res.status(200).json({ message: "Filme deletado com sucesso!" });
+    } catch (error) {
+        res.status(500).json({ message: `Ocorreu um erro ao deletar filme: ${error.message}` });
     }
 });
 
