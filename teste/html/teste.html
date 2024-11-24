@@ -10,17 +10,21 @@
 <script>
     
     async function enviar() {  
+        // recebe os valores do formulario
         nome = document.getElementById("nome").value;
         numero = document.getElementById("numero").value;
 
-
+        // define a rota com os valores
         const urlCreate = `http://localhost:3032/create/${nome}/${numero}`
         
+        // "acessa" a roda 
         const response = await fetch(urlCreate, { method: "GET" });
 
+        //pós operação da rota
+
         if(response.ok) {
-            const data = await response.json();
-            console.log(data.mensagem);
+            const data = await response.json(); //transforma a resposta do servidor em um json
+            console.log(data.mensagem); 
         } else {
             console.error("Erro na solicitação");
         }
