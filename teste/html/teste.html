@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>teste</title>
+</head>
+
+<script>
+    
+    async function enviar() {  
+        nome = document.getElementById("nome").value;
+        numero = document.getElementById("numero").value;
+
+
+        const urlCreate = `http://localhost:3032/create/${nome}/${numero}`
+        
+        const response = await fetch(urlCreate, { method: "GET" });
+
+        if(response.ok) {
+            const data = await response.json();
+            console.log(data.mensagem);
+        } else {
+            console.error("Erro na solicitação");
+        }
+    }
+
+
+</script>
+
+<body>
+  
+    <div class="form">
+        <label for="nome">Nome: </label>
+        <input type="text" name="nome" id="nome" required><br />
+
+        <label for="numero">Número</label>
+        <input type="number" name="numero" id="numero" required><br />
+
+        <button onclick=enviar()>ENVIAR!</button>
+    </div>
+
+    <div id="container"></div>
+</body>
+
+</html>
