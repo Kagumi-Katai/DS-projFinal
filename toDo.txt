@@ -1,8 +1,8 @@
 []redirecionar das paginas de create e atualizar para index.html
 []atualizar links para redirecionamento em rotas
-[]remover os formulários dos html (causa problemas)
 
 
+[x]remover os formulários dos html (causa problemas de redirecionamento)
 [x]criar a base de dados automaticamente
 [x]criar página de detalhes para mostrar mais informações sobre o objeto
 [x]criar alerta de confirmação antes de fazer atualizações
