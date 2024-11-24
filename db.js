@@ -47,4 +47,4 @@ async function initialize() {
 initialize();
 
 // Exportando o modelo
-module.exports = { Filme };
+module.exports = Filme;

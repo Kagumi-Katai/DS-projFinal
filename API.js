@@ -1,7 +1,7 @@
 /* ==== SETUP ===== */
 
 const Sequelize = require("sequelize");    
-const Filme = require("./db.js");           //importa o modelo 'Filme'
+const Filme = require("./db");        //importa o modelo 'Filme'
 const express = require("express");
 const cors = require('cors');
 
@@ -19,14 +19,20 @@ app.get("/adicionar", function (req, res) {
     res.sendFile(__dirname + "/html/create.html");
 });
 
-app.get("/editar", function (req, res) {
+app.get("/editar/:id", function (req, res) {
+
     res.sendFile(__dirname + "/html/update.html");
 });
 
-app.get("/detalhes", function (req, res) {
+app.get("/detalhes/:id", function (req, res) {
+    const { id } = req.params;
     res.sendFile(__dirname + "/html/details.html");
 });
 
+// rota do script
+app.get("/script", function (req, res) {
+    res.sendFile(__dirname + "/html/consomeAPI.js");
+});
 
 /* ==== QUERYS ==== */
 
@@ -46,8 +52,12 @@ app.get("/create/:nome_filme/:sinopse/:estudio/:data_lancamento", async function
 //read all
 app.get("/readAll", async function (req, res) {
 
+    console.log("b1");
+
     try {
         const filmes = await Filme.findAll();
+        console.log("b2");
+        console.log("Filmes encontrados:", filmes); // Log para verificar
         res.json(filmes);
     } catch (error) {
         res.status(500).json({ message: `Erro ao buscar filmes: ${error}` });

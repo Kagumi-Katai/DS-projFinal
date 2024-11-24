@@ -17,7 +17,7 @@ async function createFunc() {
 
     if (response.ok) {
         alert("Cadastro concluido");
-        window.location.href = "index.html";
+        window.location.href = "http://localhost:3031/catalogo";
     } else {
         console.error('Erro ao criar filme');
     }
@@ -96,7 +96,7 @@ async function updateFunc() {
 
     if (response.ok) {
         alert("Atualização realizada com sucesso!");
-        window.location.href = 'index.html';
+        window.location.href = 'http://localhost:3031/catalogo';
     } else {
         console.error('Erro ao atualizar filme');
     }
@@ -120,7 +120,7 @@ async function deleteFunc(id) {
 }
 
 function redirectDetails(id) {
-    window.location.href = `details.html?id=${id}`;
+    window.location.href = `http://localhost:3031/details.html?id=${id}`;
 }
 
 async function details() {
@@ -165,7 +165,7 @@ function pageVerify() {
 
 function cancell() {
     if (confirm("Deseja descartar? as modificações feitas não serão salvas!")) {
-        window.location.href = 'index.html';
+        window.location.href = 'http://localhost:3031/catalogo';
     }
 }
 
