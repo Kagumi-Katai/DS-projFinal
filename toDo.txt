@@ -4,3 +4,4 @@
 [x] criar alerta de confirmação antes de fazer atualizações
 [x] colocar para na atualização puxar os valores atuais como placeholder
 [x] criar alerta de confirmação antes de deletar
+[x] iniciar o banco com 3 indices

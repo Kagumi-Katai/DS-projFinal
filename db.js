@@ -41,6 +41,29 @@ async function initialize() {
     } catch (error) {
         console.error("Erro ao inicializar o banco de dados:", error);
     }
+
+    // Inserts iniciais
+
+    Filme.create({
+        nome_filme: "O Poderoso Chefão",
+        sinopse: "A história de uma família mafiosa e suas lutas pelo poder.",
+        estudio: "Paramount Pictures",
+        data_lancamento: "1972-03-24"
+    });
+    
+    Filme.create({
+        nome_filme: "Jurassic Park",
+        sinopse: "Cientistas criam um parque temático com dinossauros clonados, mas as coisas saem do controle.",
+        estudio: "Universal Pictures",
+        data_lancamento: "1993-06-11"
+    });
+    
+    Filme.create({
+        nome_filme: "Matrix",
+        sinopse: "Um hacker descobre que a realidade em que vive é uma simulação criada por máquinas.",
+        estudio: "Warner Bros.",
+        data_lancamento: "1999-03-31"
+    });
 }
 
 // Chamada da função de inicialização
