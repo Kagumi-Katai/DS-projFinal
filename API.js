@@ -28,7 +28,7 @@ app.get("/detalhes", function (req, res) {
 });
 
 
-/* ==== ROTAS ==== */
+/* ==== QUERYS ==== */
 
 //create
 app.get("/create/:nome_filme/:sinopse/:estudio/:data_lancamento", async function (req, res) {
@@ -101,6 +101,8 @@ app.get("/delete/:id", async function (req, res) {
         res.status(500).json({ message: `Ocorreu um erro ao deletar filme: ${error.message}` });
     }
 });
+
+/* ==== INICIANDO SERVIDOR ==== */
 
 app.listen(3031, function () {
     console.log("Servidor rodando na porta 3031")
